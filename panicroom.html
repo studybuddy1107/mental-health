@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panic Room – You Are Safe</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #F3F0EC;
+      color: #4E4A46;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #A25F5F;
+    }
+
+    .section {
+      background: #FFFDF9;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .breathing-circle {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 10px;
+      background-color: #D6CFC3;
+      border-radius: 50%;
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    .grounding-list button {
+      margin: 6px 0;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      background-color: #E5D9C5;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .affirmation-box {
+      text-align: center;
+    }
+
+    .affirmation-box button {
+      padding: 10px 20px;
+      background-color: #A8B6A1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .affirmation-text {
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    .audio-buttons button {
+      margin: 5px;
+      padding: 8px 16px;
+      background-color: #D8CFC4;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .emergency {
+      background-color: #FDECEA;
+      border-left: 5px solid #D9534F;
+      padding: 20px;
+    }
+
+    .emergency h2 {
+      color: #C0392B;
+    }
+
+    .emergency p {
+      margin: 8px 0;
+    }
+
+    .exit-link {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+      text-decoration: none;
+      background-color: #A25F5F;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .exit-link:hover {
+      background-color: #8C4D4D;
+    }
+    .site-nav {
+      background-color: transparent;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+      backdrop-filter: blur(10px);
+    }
+
+    .site-nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav ul li {
+      font-weight: 500;
+    }
+
+    .site-nav ul li a {
+      text-decoration: none;
+      color: #6B655B; /* muted warm gray */
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .site-nav ul li a:hover,
+    .site-nav ul li a:focus {
+      background-color: #C6C1B9; /* soft neutral taupe */
+      color: #3D3931; /* deeper tone for contrast */
+      outline: none;
+    }
+
+
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <ul>
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="chatbot.html">Chatbot</a></li>
+      <li><a href="panicroom.html">Panic Room</a></li>
+      <li><a href="moodmap.html">Mood Tracker</a></li>
+      <li><a href="letters.html">Letters I Won't Send</a></li>
+      <li><a href="board.html">You Are Not Alone Board</a></li>
+    </ul>
+  </nav>
+
+
+  <header>
+    <h1>You Are Safe Here 🕊️</h1>
+    <p>This space is for you to pause, breathe, and gently return to yourself.</p>
+  </header>
+
+  <div class="section">
+    <h2>🫁 Breathe With Me</h2>
+    <div class="breathing-circle"></div>
+    <p style="text-align:center;">Inhale… hold… exhale… and repeat.</p>
+  </div>
+
+  <div class="section">
+    <h2>🧠 Ground Yourself (5-4-3-2-1)</h2>
+    <div class="grounding-list">
+      <button onclick="alert('Notice 5 things you can SEE.')">🔸 5 Things You Can See</button>
+      <button onclick="alert('Notice 4 things you can TOUCH.')">🔸 4 Things You Can Touch</button>
+      <button onclick="alert('Notice 3 things you can HEAR.')">🔸 3 Things You Can Hear</button>
+      <button onclick="alert('Notice 2 things you can SMELL.')">🔸 2 Things You Can Smell</button>
+      <button onclick="alert('Notice 1 thing you can TASTE.')">🔸 1 Thing You Can Taste</button>
+    </div>
+  </div>
+
+  <div class="section affirmation-box">
+    <h2>🧡 Comforting Words</h2>
+    <button onclick="showAffirmation()">Show Me Something Gentle</button>
+    <p class="affirmation-text" id="affirmationText"> </p>
+  </div>
+
+  <div class="section">
+    <h2>🎧 Soothing Sounds</h2>
+    <div class="audio-buttons">
+      <button onclick="playSound('rain')">🌧️ Rain</button>
+      <button onclick="playSound('forest')">🌲 Forest</button>
+      <button onclick="playSound('waves')">🌊 Ocean</button>
+    </div>
+    <audio id="audioPlayer" controls style="width:100%; margin-top:10px;"></audio>
+  </div>
+
+  <div class="section emergency">
+    <h2>🚨 Need Immediate Help? (India)</h2>
+    <p><strong>iCall (TISS):</strong> +91 9152987821</p>
+    <p><strong>AASRA:</strong> +91 9820466726</p>
+    <p><strong>Vandrevala Foundation:</strong> 1860 2662 345 / 9999 666 555</p>
+    <p><strong>Sumaitri (Delhi):</strong> +91 11 23389090</p>
+    <p><strong>Snehi:</strong> +91 9582208181</p>
+    <p><strong>LGBTQ+ Support (Sangath):</strong> +91 9999011234</p>
+    <p>You can also call 112 for national emergency services.</p>
+  </div>
+
+  <a href="index.html" class="exit-link">← I Feel Okay Now</a>
+
+  <script>
+    const affirmations = [
+      "You are doing your best. That is enough.",
+      "This moment will pass. You are safe.",
+      "Inhale calm, exhale tension.",
+      "You are not alone. I'm right here with you.",
+      "You are strong, even on your soft days.",
+      "Let yourself slow down. It's okay.",
+      "You are allowed to feel everything — and still be okay.",
+      "Breathe. Just one breath at a time."
+    ];
+
+    function showAffirmation() {
+      const random = affirmations[Math.floor(Math.random() * affirmations.length)];
+      document.getElementById("affirmationText").textContent = random;
+    }
+
+    function playSound(type) {
+      const audio = document.getElementById("audioPlayer");
+      let src = "";
+
+      switch (type) {
+        case 'rain':
+          src = "https://cdn.pixabay.com/download/audio/2022/03/15/audio_eb2798b71e.mp3?filename=rain-and-thunder-ambient-113366.mp3";
+          break;
+        case 'forest':
+          src = "https://cdn.pixabay.com/download/audio/2023/03/05/audio_aa9606cebd.mp3?filename=relaxing-music-forest-quiet-9847.mp3";
+          break;
+        case 'waves':
+          src = "https://cdn.pixabay.com/download/audio/2021/09/08/audio_5739cf0b3e.mp3?filename=sea-waves-ambient-9196.mp3";
+          break;
+      }
+
+      audio.src = src;
+      audio.play();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Past Journal Entries</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Karla', sans-serif;
+      background-color: #F2EEE9;
+      color: #4E4A46;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #D8CFC4;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #FFFFFFC0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .entry-date {
+      font-weight: bold;
+      margin-top: 30px;
+      font-size: 1.1em;
+    }
+
+    .entry-type {
+      margin-left: 10px;
+      font-style: italic;
+      color: #6A5D4D;
+    }
+
+    .entry-text {
+      margin-left: 20px;
+      margin-bottom: 10px;
+      padding: 10px;
+      background-color: #EAE3D2;
+      border-radius: 8px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      text-align: center;
+      text-decoration: none;
+      background-color: #C6A387;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .back-link:hover {
+      background-color: #A57F66;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-bottom: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+    .nav-bar {
+      background-color: #D8CFC4;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #c2b6aa;
+    }
+
+    .nav-bar a {
+      text-decoration: none;
+      color: #4E4A46;
+      font-weight: 600;
+      background-color: #ECE5DA;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-bar a:hover {
+      background-color: #C6A387;
+      color: white;
+    }
+    .site-nav {
+      background-color: #D9E4DD; /* soft sage */
+      padding: 10px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-nav {
+      background-color: transparent;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+      backdrop-filter: blur(10px);
+    }
+
+    .site-nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav ul li {
+      font-weight: 500;
+    }
+
+    .site-nav ul li a {
+      text-decoration: none;
+      color: #6B655B; /* muted warm gray */
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .site-nav ul li a:hover,
+    .site-nav ul li a:focus {
+      background-color: #C6C1B9; /* soft neutral taupe */
+      color: #3D3931; /* deeper tone for contrast */
+      outline: none;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Welcome</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
+        <li><a href="panicroom.html">Panic Room</a></li>
+        <li><a href="moodmap.html">Mood Tracker</a></li>
+        <li><a href="letters.html">Letters I Won't Send</a></li>
+        <li><a href="board.html">You Are Not Alone Board</a></li>
+      </ul>
+    </nav>
+
+    <h1>📓 Your Past Journal Entries</h1>
+    <p>Gentle reminders of your journey</p>
+  </header>
+
+  <div class="container" id="entries-container">
+    <!-- Entries will be injected here -->
+  </div>
+
+  <div style="text-align: center;">
+    <a href="journal.html" class="back-link">← Back to Journal</a>
+  </div>
+
+  <footer>
+    Everything you've written matters ✨
+  </footer>
+
+  <script>
+    const container = document.getElementById('entries-container');
+
+    // Mapping of reflection types to readable labels and emojis
+    const typeLabels = {
+      "let-go": "🕊 Let Go",
+      "felt-safe": "🛡 Felt Safe",
+      "truth-today": "🪞 Truth Today",
+      "body-feel": "🧘‍♀️ Body Check-in",
+      "small-win": "🌱 Small Win"
+    };
+
+    // Group entries by date
+    const grouped = {};
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+
+      // Example key: "let-go-2025-08-12"
+      const [type, date] = key.split('-').length === 3
+        ? [key.split('-')[0] + '-' + key.split('-')[1], key.split('-')[2]]
+        : key.split('-');
+
+      if (!typeLabels[type]) continue;
+
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+
+      grouped[date].push({
+        type: type,
+        content: localStorage.getItem(key)
+      });
+    }
+
+    if (Object.keys(grouped).length === 0) {
+      container.innerHTML = `<p style="text-align:center;">No past entries yet. Your words will appear here as you write them 💬</p>`;
+    } else {
+      // Sort by date descending
+      const sortedDates = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+      sortedDates.forEach(date => {
+        const dateHeader = document.createElement('div');
+        dateHeader.classList.add('entry-date');
+        dateHeader.textContent = `🗓️ ${formatDate(date)}`;
+        container.appendChild(dateHeader);
+
+        grouped[date].forEach(entry => {
+          const typeLabel = document.createElement('div');
+          typeLabel.classList.add('entry-type');
+          typeLabel.textContent = `${typeLabels[entry.type]}:`;
+
+          const entryText = document.createElement('div');
+          entryText.classList.add('entry-text');
+          entryText.textContent = entry.content;
+
+          container.appendChild(typeLabel);
+          container.appendChild(entryText);
+        });
+      });
+    }
+
+    function formatDate(dateStr) {
+      // Converts 2025-08-12 to readable format like August 12, 2025
+      const [year, month, day] = dateStr.split('-');
+      const date = new Date(`${year}-${month}-${day}`);
+      return date.toLocaleDateString(undefined, {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>You Are Not Alone Board</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f9f5f1;
+      --text: #4e4a46;
+      --accent: #a87c7c;
+      --box-bg: #fffdf9;
+      --soft: #eae6e1;
+      --hover: #cbbdb4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav.site-nav {
+      background: rgba(255, 250, 245, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--soft);
+    }
+
+    nav.site-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 0;
+    }
+
+    nav.site-nav ul li a {
+      text-decoration: none;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    nav.site-nav ul li a:hover,
+    nav.site-nav ul li a[aria-current="page"] {
+      background: var(--hover);
+      color: #3d3733;
+    }
+
+    .board-container {
+      width: 100%;
+      max-width: 680px;
+      margin: 40px auto;
+      background: var(--box-bg);
+      border-radius: 16px;
+      padding: 30px 24px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      flex-grow: 1;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-size: 1.8rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fefcfa;
+      font-size: 1rem;
+      resize: vertical;
+      color: var(--text);
+    }
+
+    button {
+      align-self: flex-end;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #936e6e;
+    }
+
+    .messages {
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 16px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .message {
+      background: var(--soft);
+      padding: 14px 18px 14px 40px; /* <- Extra left padding for the icon */
+      border-radius: 12px;
+      font-style: italic;
+      position: relative;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.02);
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: var(--text);
+    }
+
+
+    .message::before {
+      content: "💬";
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      font-size: 1.1rem;
+      opacity: none;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #aaa29a;
+      font-size: 0.95rem;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 720px) {
+      .board-container {
+        margin: 20px;
+        padding: 24px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <ul>
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="chatbot.html">Chatbot</a></li>
+      <li><a href="panicroom.html">Panic Room</a></li>
+      <li><a href="moodmap.html">Mood Tracker</a></li>
+      <li><a href="letters.html">Letters I Won't Send</a></li>
+      <li><a href="board.html" aria-current="page">You Are Not Alone</a></li>
+    </ul>
+  </nav>
+
+  <div class="board-container">
+    <h1>You Are Not Alone</h1>
+
+    <form id="messageForm">
+      <textarea id="messageInput" placeholder="Write a supportive message here..."></textarea>
+      <button type="submit">Post Message</button>
+    </form>
+
+    <div class="messages" id="messagesContainer">
+      <p class="empty-state">No messages yet. Be the first to share ❤️</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('messageForm');
+    const input = document.getElementById('messageInput');
+    const container = document.getElementById('messagesContainer');
+
+    let messages = JSON.parse(localStorage.getItem('supportMessages')) || [];
+
+    function renderMessages() {
+      container.innerHTML = '';
+      if (messages.length === 0) {
+        container.innerHTML = '<p class="empty-state">No messages yet. Be the first to share ❤️</p>';
+        return;
+      }
+
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.className = 'message';
+        div.textContent = msg.text;
+        container.appendChild(div);
+      });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return alert("Please write something.");
+      messages.push({ text, timestamp: new Date().toISOString() });
+      localStorage.setItem('supportMessages', JSON.stringify(messages));
+      input.value = '';
+      renderMessages();
+    });
+
+    renderMessages();
+  </script>
+</body>
+</html>
+

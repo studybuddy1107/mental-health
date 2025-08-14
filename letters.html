@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Letters I Won’t Send</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #F3F0EC;
+      color: #4E4A46;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #A25F5F;
+    }
+
+    .letter-form {
+      max-width: 700px;
+      margin: 20px auto;
+      background: #FFFDF9;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .actions button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .save-btn { background-color: #A8B6A1; color: white; }
+    .delete-btn { background-color: #F7D59C; }
+    .burn-btn { background-color: #F4BFBF; }
+
+    .saved-letters {
+      max-width: 700px;
+      margin: 30px auto;
+    }
+
+    .letter {
+      background: #fff;
+      border-left: 5px solid #A25F5F;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .letter h3 {
+      margin-top: 0;
+    }
+
+    .burning {
+      animation: burn 1.5s forwards;
+    }
+
+    @keyframes burn {
+      0% { opacity: 1; transform: rotate(0); }
+      100% { opacity: 0; transform: rotate(5deg) scale(0.95); }
+    }
+    .site-nav {
+      background-color: #D9E4DD; /* soft sage */
+      padding: 10px 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-nav {
+      background-color: transparent;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+      backdrop-filter: blur(10px);
+    }
+
+    .site-nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav ul li {
+      font-weight: 500;
+    }
+
+    .site-nav ul li a {
+      text-decoration: none;
+      color: #6B655B; /* muted warm gray */
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .site-nav ul li a:hover,
+    .site-nav ul li a:focus {
+      background-color: #C6C1B9; /* soft neutral taupe */
+      color: #3D3931; /* deeper tone for contrast */
+      outline: none;
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <ul>
+      <li><a href="index.html">Welcome</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="chatbot.html">Chatbot</a></li>
+      <li><a href="panicroom.html">Panic Room</a></li>
+      <li><a href="moodmap.html">Mood Tracker</a></li>
+      <li><a href="letters.html">Letters I Won't Send</a></li>
+      <li><a href="board.html">You Are Not Alone Board</a></li>
+    </ul>
+  </nav>
+
+
+  <h1>💌 Letters I Won’t Send</h1>
+
+  <div class="letter-form">
+    <input id="letterTitle" placeholder="Title (e.g. 'To my younger self')" />
+    <textarea id="letterContent" placeholder="Write your letter here..." rows="8"></textarea>
+
+    <div class="actions">
+      <button class="save-btn" onclick="saveLetter()">Save</button>
+      <button class="delete-btn" onclick="clearForm()">Clear</button>
+      <button class="burn-btn" onclick="burnLetter()">Burn</button>
+    </div>
+  </div>
+
+  <div class="saved-letters" id="savedLetters">
+    <h2>🗂️ Your Letters</h2>
+    <!-- Letters will appear here -->
+  </div>
+
+  <script>
+    let letters = JSON.parse(localStorage.getItem('unsentLetters')) || [];
+
+    function saveLetter() {
+      const title = document.getElementById('letterTitle').value.trim();
+      const content = document.getElementById('letterContent').value.trim();
+
+      if (!title || !content) {
+        alert("Please enter both a title and a letter.");
+        return;
+      }
+
+      const entry = { title, content, timestamp: new Date().toISOString() };
+      letters.push(entry);
+      localStorage.setItem('unsentLetters', JSON.stringify(letters));
+      document.getElementById('letterTitle').value = '';
+      document.getElementById('letterContent').value = '';
+      renderLetters();
+    }
+
+    function clearForm() {
+      document.getElementById('letterTitle').value = '';
+      document.getElementById('letterContent').value = '';
+    }
+
+    function burnLetter() {
+      if (confirm("Are you sure you want to burn this letter forever?")) {
+        document.getElementById('letterTitle').value = '';
+        document.getElementById('letterContent').value = '';
+        alert("Letter burned. It’s gone now, and that’s okay.");
+      }
+    }
+
+    function renderLetters() {
+      const container = document.getElementById('savedLetters');
+      container.innerHTML = "<h2>🗂️ Your Letters</h2>";
+
+      if (letters.length === 0) {
+        container.innerHTML += "<p>No saved letters yet.</p>";
+        return;
+      }
+
+      letters.forEach((letter, index) => {
+        const div = document.createElement('div');
+        div.className = 'letter';
+        div.innerHTML = `
+          <h3>${letter.title}</h3>
+          <p>${letter.content}</p>
+          <small>Saved on ${new Date(letter.timestamp).toLocaleString()}</small>
+          <br/>
+          <button onclick="deleteLetter(${index})" style="margin-top: 10px;">🗑️ Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function deleteLetter(index) {
+      const letterEl = document.querySelectorAll('.letter')[index];
+      letterEl.classList.add('burning');
+      setTimeout(() => {
+        letters.splice(index, 1);
+        localStorage.setItem('unsentLetters', JSON.stringify(letters));
+        renderLetters();
+      }, 1500);
+    }
+
+    renderLetters();
+  </script>
+
+</body>
+</html>

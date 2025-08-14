@@ -1,16 +1,168 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Affirmations & Breathing Meditation</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .nav-bar {
+      background-color: #D8CFC4;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #c2b6aa;
+    }
 
-<body>
-  Hello world
+    .nav-bar a {
+      text-decoration: none;
+      color: #4E4A46;
+      font-weight: 600;
+      background-color: #ECE5DA;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-bar a:hover {
+      background-color: #C6A387;
+      color: white;
+    }
+  </style>
+  </head>
+  <body>
+  <!-- Intro Screen -->
+  <div class="intro-screen" id="introScreen">
+    <div class="ripple-background"></div>
+    <div class="breathing-circle"></div>
+    <div class="affirmations">
+      <p class="line" id="line1">Welcome to your calm space.</p>
+      <p class="line" id="line2">Breathe deeply. You are safe here.</p>
+      <p class="line" id="line3">Tap 'Explore' to begin your journey.</p>
+    </div>
+    <button class="explore-btn" id="startBtn">Explore</button>
+  </div>
+
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Welcome</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
+        <li><a href="panicroom.html">Panic Room</a></li>
+        <li><a href="moodmap.html">Mood Tracker</a></li>
+        <li><a href="letters.html">Letters I Won't Send</a></li>
+        <li><a href="board.html">You Are Not Alone Board</a></li>
+      </ul>
+    </nav>
+
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent" style="display:none;">
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+      <h2>Welcome</h2>
+      <p>Take a moment to ground yourself with affirmations, breathing exercises, and guided meditation.</p>
+    </section>
+    <a href="journal.html" class="journal-link">Go to Your Journal Space</a>
+
+
+    <!-- Sharing Space -->
+    <section class="sharing-space">
+      <textarea id="noteInput" rows="4" placeholder="Share your thoughts anonymously..."></textarea>
+      <button id="submitNote">Send Your Thought</button>
+    </section>
+
+    <!-- Affirmation Jar -->
+    <section class="petals-container" aria-label="Affirmation petals">
+      <!-- Petals will be dynamically inserted here -->
+    </section>
+
+    <!-- Affirmation message popup -->
+    <div class="affirmation-message" id="affirmationMessage"></div>
+
+    <!-- Breathing Tool -->
+    <section class="breathing-tool">
+      <h3>Breathing Exercise</h3>
+      <select id="breathingPreset">
+        <option value="box" selected>Box Breathing (4-4-4-4)</option>
+        <option value="calm">Calm Breathing (5-5-5-5)</option>
+        <option value="energize">Energizing Breathing (3-3-3-3)</option>
+      </select>
+      <div class="breathing-visual" id="breathingVisual"></div>
+      <div class="breathing-text" id="breathingText">Ready to begin?</div>
+      <button id="startBreathing">Start</button>
+    </section>
+
+    <!-- Guided Meditation Audio Tool -->
+    <section class="audio-tool">
+      <h3>Guided Meditation</h3>
+      <select id="meditationSelect" aria-label="Select a guided meditation">
+        <option value="" disabled selected>Select meditation</option>
+        <option value="https://cdn.pixabay.com/download/audio/2023/06/12/audio_67eea5e6f6.mp3?filename=calming-music-ambient-10827.mp3">Calming Ambient Music</option>
+        <option value="https://cdn.pixabay.com/download/audio/2023/03/05/audio_aa9606cebd.mp3?filename=relaxing-music-forest-quiet-9847.mp3">Forest Relaxation</option>
+        <option value="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3937d84d8c.mp3?filename=meditation-music-6242.mp3">Grounding Meditation</option>
+      </select>
+      <audio controls id="meditationAudio" preload="none"></audio>
+      <p class="meditation-desc" id="meditationDesc"></p>
+    </section>
+    <section class="gratitude-journal">
+      <div class="journal-container">
+        <h2>Gratitude Journal</h2>
+        <p class="prompt">Write down something you're thankful for today:</p>
+        <textarea id="gratitudeInput" placeholder="What are you grateful for?" rows="4"></textarea>
+        <button id="submitGratitude">Share Gratitude</button>
+        <p id="thankYouMessage" class="thank-you-message"></p>
+      </div>
+    </section>
+
+    <section class="happy-space" id="happySpaceSection">
+      <h2>Your Happy Space</h2>
+      <p class="prompt">Here are the things you've been thankful for:</p>
+      <div id="gratitudeList"></div>
+      <button id="clearGratitude">Clear Gratitude</button>
+    </section>
+
+    <div class="visualization-tool">
+      <h3>Visualization Meditation</h3>
+      <p>Imagine yourself in a peaceful place. Let go of any tension.</p>
+
+      <!-- Add Select -->
+      <select id="visualizationSelect">
+        <option value="" disabled selected>Select a scene</option>
+        <option value="forest">Forest</option>
+        <option value="beach">Beach</option>
+        <option value="mountain">Mountain</option>
+      </select>
+
+      <!-- Display selected image -->
+      <div id="visualizationImage"></div>
+
+      <!-- Play related audio -->
+      <div id="visualizationAudio">
+        <audio controls>
+          <source src="" type="audio/mpeg" />
+        </audio>
+      </div>
+    </div>
+    <section class="mood-tracker">
+      <h3>Mood Tracker</h3>
+      <input type="range" id="moodSlider" min="1" max="10" value="5" />
+      <div id="moodLabel">Mood: Neutral</div>
+      <button id="submitMood">Submit Mood</button>
+      <div id="moodHistory"></div>
+    </section>
+    <section class="go-to-journal">
+      <p>Need a moment of reflection?</p>
+      <a href="journal.html" class="journal-link">Open Your Journal</a>
+      
+    </section>
+    
+
+  </main>
+
   <script src="script.js"></script>
 </body>
-
 </html>

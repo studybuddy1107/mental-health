@@ -1,4 +1,607 @@
-html {
-  height: 100%;
+/* Base */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #DAD6CF;
+  color: #3B4C45;
+}
+
+/* Intro Screen */
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  background-color: #DAD6CF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.ripple-background::before,
+.ripple-background::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(138, 154, 143, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple 3s ease-out infinite;
+}
+
+.ripple-background::after {
+  animation-delay: 1.5s;
+}
+
+.breathing-circle {
+  width: 150px;
+  height: 150px;
+  background-color: #8A9A8F;
+  border-radius: 50%;
+  animation: breathe 6s ease-in-out infinite;
+  z-index: 2;
+}
+
+.affirmations {
+  margin-top: 2rem;
+  color: #3B4C45;
+}
+
+.line {
+  opacity: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  animation: fadeInText 1s forwards;
+}
+
+#line1 { animation-delay: 1s; }
+#line2 { animation-delay: 2.5s; }
+#line3 { animation-delay: 4s; }
+
+.explore-btn {
+  margin-top: 2rem;
+  background-color: #8A9A8F;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.explore-btn:hover {
+  background-color: #7B8A7E;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 700px;
+  margin: 5vh auto;
+  padding: 2rem;
+  background-color: #C1B9AC;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  opacity: 0;
+  animation: fadeInContent 1.5s ease forwards;
+}
+
+/* Welcome */
+.welcome-section {
+  text-align: center;
+}
+
+.welcome-section h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #3B4C45;
+}
+
+.welcome-section p {
+  color: #5A6B64;
+  line-height: 1.6;
+}
+
+/* Sharing Space */
+.sharing-space {
+  background-color: #E4DDD6;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+#noteInput {
   width: 100%;
+  font-size: 1.1rem;
+  background-color: #F7F3EE;
+  border: none;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 1rem;
+  resize: none;
+  color: #3B4C45;
+  box-sizing: border-box;
+  caret-color: #7B8A7E;
+}
+
+#noteInput::selection {
+  background: #C1B9AC;
+  color: #3B4C45;
+}
+
+#noteInput:focus {
+  outline: none;
+  box-shadow: inset 0 0 12px #8A9A8F;
+}
+
+#submitNote {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  background-color: #8A9A8F;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#submitNote:hover {
+  background-color: #7B8A7E;
+}
+
+/* Affirmation Jar */
+.petals-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  min-height: 300px;
+  background: transparent;
+}
+
+.petal {
+  background: #9CA88D;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  width: 140px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  color: #3B4C45;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: transform 0.3s ease;
+}
+
+.petal:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* Affirmation Message Popup */
+.affirmation-message {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #8A9A8F;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Animations */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInText {
+  to { opacity: 1; }
+}
+
+@keyframes fadeInContent {
+  to { opacity: 1; }
+}
+/* 🌬️ Breathing Tool */
+.breathing-tool {
+  background-color: #E4DDD6;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.breathing-tool h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #3B4C45;
+}
+
+.breathing-visual {
+  width: 120px;
+  height: 120px;
+  background-color: #8A9A8F;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  transition: transform 2s ease-in-out;
+}
+
+.breathing-text {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #3B4C45;
+  margin-bottom: 1rem;
+}
+
+#startBreathing {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #8A9A8F;
+  color: white;
+  cursor: pointer;
+}
+
+#startBreathing:hover {
+  background-color: #7B8A7E;
+}
+.breathing-tool select {
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #F7F3EE;
+  color: #3B4C45;
+}
+/* 🎧 Guided Meditation Audio Tool */
+.audio-tool {
+  background-color: #E4DDD6;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 3rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.audio-tool h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #3B4C45;
+}
+
+.audio-tool select {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  background-color: #F7F3EE;
+  color: #3B4C45;
+  border: 1px solid #ccc;
+}
+
+.audio-tool audio {
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+}
+
+.meditation-desc {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #5A6B64;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+/* Gratitude Journal Styling */
+/* Gratitude Journal Styling */
+.gratitude-journal {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F7F3EE;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.journal-container {
+  background-color: #E4DDD6;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #3B4C45;
+  margin-bottom: 1rem;
+}
+
+.prompt {
+  font-size: 1.2rem;
+  color: #5A6B64;
+  margin-bottom: 1rem;
+}
+
+#gratitudeInput {
+  width: 90%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  background-color: #F7F3EE;
+  border: 2px solid #C1B9AC;
+  border-radius: 12px;
+  color: #3B4C45;
+  margin-bottom: 1.5rem;
+  max-height: 150px; /* Prevent overflow */
+  resize: none;
+  overflow-y: auto; /* Add scrollbar when overflow */
+  transition: border 0.3s ease;
+}
+
+#gratitudeInput:focus {
+  outline: none;
+  border-color: #8A9A8F;
+}
+
+#submitGratitude {
+  padding: 1rem 2rem;
+  background-color: #8A9A8F;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#submitGratitude:hover {
+  background-color: #7B8A7E;
+}
+
+.thank-you-message {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: #7B8A7E;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Happy Space Styling */
+.happy-space {
+  display: none;
+  padding: 2rem;
+  background-color: #E4DDD6;
+  margin-top: 2rem;
+  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+.happy-space h2 {
+  font-size: 2rem;
+  color: #3B4C45;
+}
+
+#gratitudeList {
+  margin-top: 1.5rem;
+  color: #3B4C45;
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 1rem;
+  background-color: #F7F3EE;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#clearGratitude {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background-color: #8A9A8F;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+#clearGratitude:hover {
+  background-color: #7B8A7E;
+}
+
+
+.visualization-tool {
+  background-color: #E4DDD6;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
+}
+
+#startVisualization {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  background-color: #8A9A8F;
+  color: white;
+  cursor: pointer;
+}
+
+#startVisualization:hover {
+  background-color: #7B8A7E;
+}
+
+#visualizationDescription {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: #5A6B64;
+}
+
+/* Mood Tracker */
+.mood-tracker {
+  background-color: #E4DDD6;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
+}
+
+.mood-slider-container {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#moodSlider {
+  width: 100%;
+  max-width: 400px;
+  height: 10px;
+  border-radius: 10px;
+  background: #d1d1d1;
+  -webkit-appearance: none;
+  transition: all 0.2s ease-in-out;
+}
+
+#moodSlider::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #8A9A8F;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#moodSlider:hover::-webkit-slider-thumb {
+  background-color: #7B8A7E;
+}
+
+#moodLabel {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #3B4C45;
+  font-weight: 600;
+}
+
+#submitMood {
+  margin-top: 1rem;
+  padding: 0.85rem 1.5rem;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  background-color: #8A9A8F;
+  color: white;
+  cursor: pointer;
+}
+
+#submitMood:hover {
+  background-color: #7B8A7E;
+}
+
+#moodHistory {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #3B4C45;
+}
+.journal-link {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #A8B6A1;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.journal-link:hover {
+  background-color: #8CA58A;
+}
+.go-to-journal {
+  text-align: center;
+  margin-top: 50px;
+  padding: 30px;
+  background-color: #EAE3D2;
+  border-radius: 12px;
+}
+.site-nav {
+  background-color: transparent;
+  padding: 12px 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+  backdrop-filter: blur(10px);
+}
+
+.site-nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.site-nav ul li {
+  font-weight: 500;
+}
+
+.site-nav ul li a {
+  text-decoration: none;
+  color: #6B655B; /* muted warm gray */
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  letter-spacing: 0.03em;
+}
+
+.site-nav ul li a:hover,
+.site-nav ul li a:focus {
+  background-color: #C6C1B9; /* soft neutral taupe */
+  color: #3D3931; /* deeper tone for contrast */
+  outline: none;
 }

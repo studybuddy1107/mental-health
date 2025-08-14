@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Gentle Companion</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Karla', sans-serif;
+      background-color: #F2EEE9;
+      margin: 0;
+      padding: 0;
+      color: #4E4A46;
+    }
+
+    header {
+      background-color: #D8CFC4;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .chat-container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #FFFFFFC0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      height: 70vh;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 75%;
+      line-height: 1.5;
+    }
+
+    .user {
+      background-color: #C6A387;
+      color: white;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot {
+      background-color: #EAE3D2;
+      align-self: flex-start;
+    }
+
+    .input-area {
+      display: flex;
+      justify-content: space-between;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+      background-color: #ECE5DA;
+    }
+
+    button {
+      margin-left: 10px;
+      padding: 12px 20px;
+      background-color: #A8B6A1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #8CA58A;
+    }
+
+    .back-link {
+      text-align: center;
+      display: block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: white;
+      background-color: #C6A387;
+      padding: 10px 20px;
+      border-radius: 8px;
+    }
+
+    .back-link:hover {
+      background-color: #A57F66;
+    }
+    .nav-bar {
+      background-color: #D8CFC4;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #c2b6aa;
+    }
+
+    .nav-bar a {
+      text-decoration: none;
+      color: #4E4A46;
+      font-weight: 600;
+      background-color: #ECE5DA;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-bar a:hover {
+      background-color: #C6A387;
+      color: white;
+    }
+    .site-nav {
+      background-color: transparent;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+      backdrop-filter: blur(10px);
+    }
+
+    .site-nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav ul li {
+      font-weight: 500;
+    }
+
+    .site-nav ul li a {
+      text-decoration: none;
+      color: #6B655B; /* muted warm gray */
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .site-nav ul li a:hover,
+    .site-nav ul li a:focus {
+      background-color: #C6C1B9; /* soft neutral taupe */
+      color: #3D3931; /* deeper tone for contrast */
+      outline: none;
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🤍 Your Gentle Companion</h1>
+    <p>Feel free to talk — I’m here to listen.</p>
+  </header>
+  <nav class="nav-bar">
+    <a href="panicroom.html">🛑 Panic Room</a>
+    <a href="index.html">🏠 Home</a>
+    <a href="journal.html">📓 Journal</a>
+    <a href="entries.html">🕰️ Past Entries</a>
+    <a href="chatbot.html">💬 Chatbot</a>
+  </nav>
+
+  <div class="chat-container" id="chatbox">
+    <!-- Messages appear here -->
+  </div>
+
+  <div class="input-area">
+    <input type="text" id="userInput" placeholder="Type how you're feeling..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <a href="index.html" class="back-link">← Back to Welcome Page</a>
+
+  <script>
+    const chatbox = document.getElementById('chatbox');
+
+    const botReplies = [
+      "That sounds really tough. I'm here for you.",
+      "I'm so glad you shared that with me.",
+      "Take a deep breath. You're doing the best you can.",
+      "Would you like to talk more about that?",
+      "It's okay to feel that way.",
+      "You’re not alone. I’m here to listen.",
+      "Is there something you need right now?",
+      "Let’s take it one moment at a time."
+    ];
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const userMessage = input.value.trim();
+
+      if (userMessage === '') return;
+
+      appendMessage(userMessage, 'user');
+      input.value = '';
+
+      // Simulate bot response after delay
+      setTimeout(() => {
+        const botResponse = botReplies[Math.floor(Math.random() * botReplies.length)];
+        appendMessage(botResponse, 'bot');
+      }, 1000);
+    }
+
+    function appendMessage(message, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add('message', sender);
+      msg.textContent = message;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  </script>
+</body>
+</html>

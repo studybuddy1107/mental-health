@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Journal Space</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Karla', sans-serif;
+      background-color: #F2EEE9;
+      color: #4E4A46;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #D8CFC4;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #FFFFFFC0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1em;
+      background-color: #EAE3D2;
+      color: #333;
+    }
+
+    textarea {
+      resize: vertical;
+      font-family: inherit;
+      min-height: 120px;
+    }
+
+    .prompt {
+      margin-top: 20px;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .submit-btn {
+      background-color: #A8B6A1;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #8CA58A;
+    }
+
+    .success-message {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #D8CFC4;
+      border-radius: 8px;
+      color: #4E4A46;
+      text-align: center;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .celebration {
+      font-size: 2em;
+      animation: floatUp 2s ease-out forwards;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-30px); opacity: 0; }
+    }
+
+    .back-link {
+      display: inline-block;
+      margin: 30px auto 0;
+      text-align: center;
+      text-decoration: none;
+      background-color: #C6A387;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .back-link:hover {
+      background-color: #A57F66;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-bottom: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+    .daily-quote {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.1em;
+      margin: 20px auto 30px;
+      max-width: 600px;
+      padding: 15px 20px;
+      background-color: #ECE5DA;
+      color: #5A544D;
+      border-left: 4px solid #C6A387;
+      border-radius: 8px;
+    }
+    .nav-bar {
+      background-color: #D8CFC4;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #c2b6aa;
+    }
+
+    .nav-bar a {
+      text-decoration: none;
+      color: #4E4A46;
+      font-weight: 600;
+      background-color: #ECE5DA;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-bar a:hover {
+      background-color: #C6A387;
+      color: white;
+    }
+    .site-nav {
+      background-color: transparent;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #E3E1DC; /* very subtle separator */
+      backdrop-filter: blur(10px);
+    }
+
+    .site-nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .site-nav ul li {
+      font-weight: 500;
+    }
+
+    .site-nav ul li a {
+      text-decoration: none;
+      color: #6B655B; /* muted warm gray */
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      letter-spacing: 0.03em;
+    }
+
+    .site-nav ul li a:hover,
+    .site-nav ul li a:focus {
+      background-color: #C6C1B9; /* soft neutral taupe */
+      color: #3D3931; /* deeper tone for contrast */
+      outline: none;
+    }
+
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Welcome</a></li>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
+        <li><a href="panicroom.html">Panic Room</a></li>
+        <li><a href="moodmap.html">Mood Tracker</a></li>
+        <li><a href="letters.html">Letters I Won't Send</a></li>
+        <li><a href="board.html">You Are Not Alone Board</a></li>
+      </ul>
+    </nav>
+
+    <div class="daily-quote" id="daily-quote"></div>
+
+    <h1>🌿 Your Journal Space</h1>
+    <p style="margin-top: 8px;">A place to pause, reflect, and be with yourself.</p>
+  </header>
+
+  <div class="container">
+    <label for="reflection-select">Choose your reflection for today:</label>
+    <select id="reflection-select" onchange="showReflection()">
+      <option value="">-- Select --</option>
+      <option value="let-go">🕊 What do you want to let go of?</option>
+      <option value="felt-safe">🛡 A moment I felt safe today</option>
+      <option value="truth-today">🪞 A truth I know today</option>
+      <option value="body-feel">🧘‍♀️ How does my body feel today?</option>
+      <option value="small-win">🌱 What’s one small win today?</option>
+    </select>
+
+    <div id="reflection-inputs"></div>
+
+    <a href="index.html" class="back-link">← Back to Welcome Page</a>
+    <a href="entries.html" class="back-link">📓 View Past Entries</a>
+
+
+  </div>
+
+  <footer>
+    You are safe here ✨
+  </footer>
+
+  <script>
+    function showReflection() {
+      const reflectionType = document.getElementById("reflection-select").value;
+      const container = document.getElementById("reflection-inputs");
+
+      const reflections = {
+        "let-go": {
+          prompt: "What would you like to let go of today?",
+          placeholder: "Write freely. Let it float away...",
+        },
+        "felt-safe": {
+          prompt: "Describe a moment you felt safe today.",
+          placeholder: "It can be small — a sound, a hug, a breath.",
+        },
+        "truth-today": {
+          prompt: "What’s one truth you know today?",
+          placeholder: "Something you're certain about, however small.",
+        },
+        "body-feel": {
+          prompt: "How does your body feel today?",
+          placeholder: "Describe physical sensations or energy.",
+        },
+        "small-win": {
+          prompt: "What’s one small win you had today?",
+          placeholder: "A victory, even if tiny — it counts.",
+        }
+      };
+
+      if (reflectionType && reflections[reflectionType]) {
+        const { prompt, placeholder } = reflections[reflectionType];
+
+        container.innerHTML = `
+          <div class="reflection-box">
+            <p class="prompt">${prompt}</p>
+            <textarea id="journal-entry" placeholder="${placeholder}"></textarea>
+            <button class="submit-btn" onclick="saveEntry('${reflectionType}')">Submit</button>
+            <div id="confirmation"></div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = "";
+      }
+    }
+
+    function saveEntry(type) {
+      const text = document.getElementById("journal-entry").value.trim();
+      if (text === "") return;
+
+      const today = new Date().toISOString().split("T")[0];
+      const key = `${type}-${today}`;
+
+      localStorage.setItem(key, text);
+
+      const confirmation = document.getElementById("confirmation");
+      confirmation.innerHTML = `
+        <div class="success-message">
+          🎉 You showed up for yourself today.<br>Entry saved!
+          <div class="celebration">💖</div>
+        </div>
+      `;
+
+      // Optional: Clear textarea after submission
+      document.getElementById("journal-entry").value = "";
+    }
+      const quotes = [
+        "“You are allowed to be both a masterpiece and a work in progress.” – Sophia Bush",
+        "“Your feelings are valid. Your experiences are real. Your presence matters.”",
+        "“Be gentle with yourself. You’re doing the best you can.”",
+        "“The moon does not fight. It doesn’t worry. It just shines.” – Daoist proverb",
+        "“Rest is not a reward. It's a right.”",
+        "“You’ve survived 100% of your worst days. You’re still here.”",
+        "“Healing isn’t linear — but it is happening.”",
+        "“You don’t have to figure it all out today.”",
+        "“Peace begins the moment you choose not to allow another person or event to control your emotions.” – Pema Chödrön"
+      ];
+
+      function getQuoteOfDay() {
+        const today = new Date();
+        const index = today.getDate() % quotes.length;
+        return quotes[index];
+      }
+
+      document.getElementById("daily-quote").textContent = getQuoteOfDay();
+  </script>
+</body>
+</html>
